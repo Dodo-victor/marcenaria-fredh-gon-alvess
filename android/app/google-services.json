@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "986066052439",
+    "project_id": "fredh-carpintaria",
+    "storage_bucket": "fredh-carpintaria.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986066052439:android:833d1b15a69b95e4aa4a12",
+        "android_client_info": {
+          "package_name": "com.example.fredh_lda"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0Lu65mZG4dO-PKTLOahkT9aEmrhTfnAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

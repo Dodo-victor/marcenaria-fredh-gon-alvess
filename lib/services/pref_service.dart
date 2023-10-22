@@ -25,15 +25,26 @@ class PrefService {
 
    final user =  prefService.get("user");
 
+   print(user);
+
   return user;
 
+  }
 
+  saveTheme(value) async {
+    final prefService = await SharedPreferences.getInstance();
 
+   await prefService.setBool("theme", value);
+  }
 
+  getTheme() async {
+    final prefService = await SharedPreferences.getInstance();
 
+    final theme =  prefService.getBool("theme");
 
+    print(theme);
 
-
+    return theme;
 
   }
 }

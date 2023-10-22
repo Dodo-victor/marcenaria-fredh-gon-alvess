@@ -3,6 +3,7 @@ import 'package:fredh_lda/Methods/firestore_methods.dart';
 import 'package:fredh_lda/Screens/bottom_bar.dart';
 import 'package:fredh_lda/Widgets/submit_button.dart';
 import 'package:fredh_lda/utilis/colors.dart';
+import 'package:fredh_lda/utilis/makeCall.dart';
 
 import '../../utilis/show_snack_bar.dart';
 
@@ -20,6 +21,7 @@ class ProductDetailsCard extends StatefulWidget {
   final String size;
   final VoidCallback? requestProduct;
   final double? heigth;
+
   ProductDetailsCard({
     super.key,
     required this.photoUrl,
@@ -32,7 +34,7 @@ class ProductDetailsCard extends StatefulWidget {
     this.isRequesting = false,
     required this.woodType,
     required this.size,
-     this.isLoading = false, required this.productDoc, required this.productCollection,
+    this.isLoading = false, required this.productDoc, required this.productCollection,
   });
 
   @override
@@ -43,20 +45,33 @@ class ProductDetailsCard extends StatefulWidget {
 
 class _ProductDetailsCardState extends State<ProductDetailsCard> {
   final FirestoreMethods _firestoreMethods = FirestoreMethods();
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery
+        .of(context)
+        .size;
     return Column(
       children: [
         Container(
           height: size.height * 0.3,
+
           width: double.infinity,
           decoration: BoxDecoration(
-            border: Border.all(),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: NetworkImage(widget.photoUrl, scale: 2),
-            ),
+            border: Border.all(color: Colors.grey),
+
+          ),
+          child: Image(
+            image: NetworkImage(widget.photoUrl, scale: 2),
+            fit: BoxFit.fill,
+            errorBuilder: (s, error, a) {
+              return const Center(
+                child: Text(
+                  "Ocorreu um erro ao carregar a Imagem",
+                  textAlign: TextAlign.center,
+                ),
+              );
+            },
           ),
         ),
         const SizedBox(
@@ -79,15 +94,15 @@ class _ProductDetailsCardState extends State<ProductDetailsCard> {
                         fontWeight: FontWeight.bold,
                       ),
                       children: [
-                    TextSpan(
-                      text: widget.name,
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ])),
+                        TextSpan(
+                          text: widget.name,
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ])),
               const SizedBox(
                 height: 5,
               ),
@@ -100,15 +115,15 @@ class _ProductDetailsCardState extends State<ProductDetailsCard> {
                         fontWeight: FontWeight.bold,
                       ),
                       children: [
-                    TextSpan(
-                      text: widget.price,
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ])),
+                        TextSpan(
+                          text: widget.price,
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ])),
               const SizedBox(
                 height: 5,
               ),
@@ -121,15 +136,15 @@ class _ProductDetailsCardState extends State<ProductDetailsCard> {
                         fontWeight: FontWeight.bold,
                       ),
                       children: [
-                    TextSpan(
-                      text: widget.size,
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ])),
+                        TextSpan(
+                          text: widget.size,
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ])),
               const SizedBox(
                 height: 5,
               ),
@@ -142,15 +157,15 @@ class _ProductDetailsCardState extends State<ProductDetailsCard> {
                         fontWeight: FontWeight.bold,
                       ),
                       children: [
-                    TextSpan(
-                      text: widget.woodType,
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ])),
+                        TextSpan(
+                          text: widget.woodType,
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ])),
               Text(
                 widget.detais,
                 style: const TextStyle(
@@ -164,102 +179,108 @@ class _ProductDetailsCardState extends State<ProductDetailsCard> {
               ),
               widget.isRequesting == true
                   ? SubmitButton(
-                      // width: 400,
+                // width: 400,
 
-                      icon: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.shopping_cart),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            'Cancelar solicitação',
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                        ],
-                      ),
-                      height: 40,
-                      title: 'Solicitar',
-                      isLoading: widget.isLoading,
-                      borderRadius: BorderRadius.circular(15),
-                      loaderColor: Colors.grey.shade200,
-                      color: Colors.redAccent.shade400,
-                      function: () async {
-                        setState(() {
-                          widget.isLoading = true;
-                        });
+                icon: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.shopping_cart),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      'Cancelar solicitação',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline6,
+                    ),
+                  ],
+                ),
+                height: 40,
+                title: 'Solicitar',
+                isLoading: widget.isLoading,
+                borderRadius: BorderRadius.circular(15),
+                loaderColor: Colors.grey.shade200,
+                color: Colors.redAccent.shade400,
+                function: () async {
+                  setState(() {
+                    widget.isLoading = true;
+                  });
 
 
-                          await _firestoreMethods.cancelRequest(
-                              productDoc: widget.productDoc,
-                              productCollection: widget.productCollection,
-                              productId: widget.productId);
+                  await _firestoreMethods.cancelRequest(
+                      productDoc: widget.productDoc,
+                      productCollection: widget.productCollection,
+                      productId: widget.productId);
 
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const BottomBar(),
-                            ),
-                          );
-                          /*  Navigator.pushAndRemoveUntil(
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BottomBar(),
+                    ),
+                  );
+                  /*  Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const BottomBar()),
                               (route) => false); */
 
 
-                        setState(() {
-                          widget.isLoading = false;
-                        });
-                      },
-                    )
+                  setState(() {
+                    widget.isLoading = false;
+                  });
+                },
+              )
                   : SubmitButton(
-                      // width: 400,
+                // width: 400,
 
-                      icon: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.shopping_cart),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            'Solicitar',
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                        ],
-                      ),
-                      height: 40,
-                      title: 'Solicitar',
-                      isLoading: widget.isLoading,
-                      borderRadius: BorderRadius.circular(15),
-                      loaderColor: Colors.grey.shade200,
-                      color: ColorsApp.primaryColorTheme,
-                      function: () async {
-                        setState(() {
-                          widget.isLoading = true;
-                        });
+                icon: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.shopping_cart),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      'Solicitar',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline6,
+                    ),
+                  ],
+                ),
+                height: 40,
+                title: 'Solicitar',
+                isLoading: widget.isLoading,
+                borderRadius: BorderRadius.circular(15),
+                loaderColor: Colors.grey.shade200,
+                color: ColorsApp.primaryColorTheme,
+                function: () async {
+                  setState(() {
+                    widget.isLoading = true;
+                  });
 
-                        /*  try { */
-                        await _firestoreMethods.setRequestProduct(
-                            productId: widget.productId,
-                            productDoc: widget.productDoc,
-                            productCollection: widget.productCollection,
-                            context: context);
-                        /*  } catch (e) {
+                  /*  try { */
+                  await _firestoreMethods.setRequestProduct(
+                      productId: widget.productId,
+                      productDoc: widget.productDoc,
+                      productCollection: widget.productCollection,
+                      context: context);
+                  /*  } catch (e) {
                           showSnackBar(
                               context: context,
                               content:
                                   "Ocorreu um erro desconhecido por favor tente mais tarde $e");
                         } */
 
-                        setState(() {
-                          widget.isLoading = false;
-                        });
-                      },
-                    ),
+                  setState(() {
+                    widget.isLoading = false;
+                  });
+                },
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -268,11 +289,19 @@ class _ProductDetailsCardState extends State<ProductDetailsCard> {
                 style: TextStyle(
                     color: Colors.black45, fontWeight: FontWeight.w600),
               ),
-              Text(
-                '921750554',
-                style: TextStyle(
-                    color: ColorsApp.primaryColorTheme,
-                    fontWeight: FontWeight.w600),
+              InkWell(
+                onTap: () {
+
+                  makeCall(phoneNumber: '921750554', context: context);
+
+                },
+
+                child: Text(
+                  '921750554',
+                  style: TextStyle(
+                      color: ColorsApp.primaryColorTheme,
+                      fontWeight: FontWeight.w600),
+                ),
               )
             ],
           ),

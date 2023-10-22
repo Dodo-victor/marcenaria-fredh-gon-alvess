@@ -10,8 +10,9 @@ class UserRepository extends ChangeNotifier {
   final PrefService _prefService = PrefService();
 
   UserModel? _user;
+  UserModel? _localUser;
 
-   get user async  {
+   get user   {
 
     if(_user != null)  {
 
@@ -19,12 +20,11 @@ class UserRepository extends ChangeNotifier {
 
 
     } else {
+      if(_localUser != null){
+        return  _localUser!;
+      }
 
-      final  userLocal = await  _prefService.getUser();
 
-      final UserModel _user = UserModel.fromMap(jsonDecode(userLocal));
-
-      return _user;
     }
 
 
@@ -36,6 +36,17 @@ class UserRepository extends ChangeNotifier {
   getUser() async {
     final userData = await _db.getUser();
     _user = userData;
+    final  userLocal = await  _prefService.getUser();
+
+
+
+    if(userLocal != null){
+      final  user =  jsonDecode(userLocal);
+      UserModel userModel = UserModel.fromMap(user);
+      _localUser = userModel;
+
+    }
+
     notifyListeners();
   }
 }

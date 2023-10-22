@@ -8,6 +8,7 @@ import 'package:fredh_lda/Screens/bottom_bar.dart';
 import 'package:fredh_lda/firebase_options.dart';
 import 'package:fredh_lda/repository/theme_manager_repository.dart';
 import 'package:fredh_lda/repository/user_repository.dart';
+import 'package:fredh_lda/services/pref_service.dart';
 import 'package:fredh_lda/utilis/colors.dart';
 
 
@@ -18,15 +19,39 @@ void main() async {
    
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.android);
-  runApp(ProviderScope(child: MyApp()));
+  runApp( const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends ConsumerWidget {
-  MyApp({super.key});
+class MyApp extends ConsumerStatefulWidget {
+ const MyApp({super.key});
+
+  @override
+  ConsumerState<MyApp> createState() => _MyAppState();
+}
+
+
+
+class _MyAppState extends ConsumerState<MyApp> {
+
   final AuthMethods _authMethods = AuthMethods();
+
+  _loadTheme() async {
+  await ref.read(themeDataManagerProvider).loadTheme();
+
+  }
+
+  @override
+  void initState() {
+
+    _loadTheme();
+
+    super.initState();
+  }
+
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context, ) {
+
     final themeDataManager = ref.watch(themeDataManagerProvider);
     return MaterialApp(
       title: 'Flutter Demo',

@@ -1,17 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fredh_lda/Methods/auth_methods.dart';
 import 'package:fredh_lda/models/merchandise.dart';
 import 'package:fredh_lda/models/request_product_model.dart';
 import 'package:fredh_lda/models/userModel.dart';
-import 'package:fredh_lda/utilis/show_snack_bar.dart';
+
 import 'package:uuid/uuid.dart';
 
 class FirestoreMethods {
   final FirebaseFirestore db = FirebaseFirestore.instance;
 
-  final AuthMethods _authMethods = AuthMethods();
+  //final AuthMethods _authMethods = AuthMethods();
 
   final String currentUid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -59,7 +58,7 @@ class FirestoreMethods {
         .doc(productId)
         .delete();
 
- /*   await db
+    /*   await db
         .collection('marçenaria')
         .doc(productDoc)
         .collection(productCollection)
@@ -72,8 +71,7 @@ class FirestoreMethods {
       required String productDoc,
       required String productCollection,
       required BuildContext context}) async {
-    final userData =
-        await db.collection("usuários").doc(currentUid).get();
+    final userData = await db.collection("usuários").doc(currentUid).get();
     UserModel user = UserModel.fromMap(userData);
 
     final productData = await db
@@ -83,25 +81,27 @@ class FirestoreMethods {
         .doc(productId)
         .get();
 
-
-
     print(productId);
 
     MerchandiseModel merchandise = MerchandiseModel.fromMap(productData);
     final String uid = const Uuid().v4();
 
-   final hasRequest = await db.collection("solicitação")
-       .doc(currentUid)
-       .collection("solicitação").where("id", isEqualTo: merchandise.id ,).get();
+    final hasRequest = await db
+        .collection("solicitação")
+        .doc(currentUid)
+        .collection("solicitação")
+        .where(
+          "id",
+          isEqualTo: merchandise.id,
+        )
+        .get();
 
-   print(merchandise.id );
+    print(merchandise.id);
 
-   print(hasRequest.docs);
-
-
+    print(hasRequest.docs);
 
 //print(hasRequest.docs.length);
-    if(hasRequest.docs.isEmpty){
+    if (hasRequest.docs.isEmpty) {
       final RequestProductModel requestProduct = RequestProductModel(
           user: user,
           product: merchandise,
@@ -115,8 +115,8 @@ class FirestoreMethods {
           .collection("solicitação")
           .doc(productId)
           .set(
-        requestProduct.toMap(),
-      );
+            requestProduct.toMap(),
+          );
 
       await db
           .collection('marçenaria')
@@ -142,7 +142,7 @@ class FirestoreMethods {
                           height: 100,
                           width: 100,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 142, 224, 184),
+                            color: const Color.fromARGB(255, 142, 224, 184),
                             borderRadius: BorderRadius.circular(190),
                           ),
                           child: Icon(
@@ -175,9 +175,7 @@ class FirestoreMethods {
               ),
             );
           });
-
-    } else{
-
+    } else {
       showDialog(
           context: context,
           builder: (context) {
@@ -227,12 +225,6 @@ class FirestoreMethods {
             );
           });
     }
-
-
-
-
-
-
   }
 
   getWindowsData() {
@@ -304,7 +296,7 @@ class FirestoreMethods {
        // List<Merchandise> merchandise;
 
 
-       
+
 
         for (var element in event.docs) {
           //print(element.data().length);
@@ -315,21 +307,21 @@ class FirestoreMethods {
       name: element['nome'],
       descr: element['descrição'],
       photoUrl: element['foto'],
-    ); 
-         
-  
+    );
 
-       
+
+
+
 
 
  //print(data);
 
 
- 
- 
+
+
         }
 
-   
+
 
         return _merchandiseData;
       },
@@ -338,10 +330,16 @@ class FirestoreMethods {
 
   getUser({String? userUid}) async {
     final userData =
-        await db.collection("usuários").doc( userUid ?? currentUid).get();
+        await db.collection("usuários").doc(userUid ?? currentUid).get();
 
     UserModel user = UserModel.fromMap(userData);
 
     return user;
+  }
+
+  changeName({required String newName}) async {
+    await db.collection('usuários').doc(currentUid).update({
+      "nome": newName,
+    });
   }
 }

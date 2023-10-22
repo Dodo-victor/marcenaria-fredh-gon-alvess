@@ -8,6 +8,7 @@ class SellCard extends StatelessWidget {
   final String price;
   final String name;
   final ImageProvider<Object>? photoUrl;
+
   const SellCard(
       {super.key,
       this.function,
@@ -24,21 +25,23 @@ class SellCard extends StatelessWidget {
         onTap: function,
         child: Container(
           decoration: BoxDecoration(
+              //    color: Colors.grey.shade300,
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: ColorsApp.primaryColorTheme),
               boxShadow: [
                 BoxShadow(
-                    color: ColorsApp.primaryColorTheme.withOpacity(0.5),
-                    blurRadius: 5,
-                    spreadRadius: 1,
-                    offset: const Offset(0.4, 0.4),)
+                  color: Colors.grey.shade200,
+                  //blurRadius: 5,
+                  spreadRadius: 1,
+                  offset: const Offset(0.4, 0.4),
+                ),
               ]),
           child: Card(
-            color: Colors.grey.shade100,
-            surfaceTintColor: Colors.white,
+            color: Colors.grey.shade200,
+            surfaceTintColor: ColorsApp.primaryColorTheme,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            elevation: 5,
+            elevation: 10,
             shadowColor: ColorsApp.primaryColorTheme,
             child: Column(
               children: [
@@ -49,12 +52,19 @@ class SellCard extends StatelessWidget {
                   // alignment: Alignment.center,
                   height: 220,
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: photoUrl ?? const AssetImage("assets/porta.jpg"),
-                    ),
-                    //color: ColorsApp.primaryColorTheme
+
+
+                  child: Image(
+                    image: photoUrl ?? const AssetImage("assets/porta.jpg"),
+                    fit: BoxFit.fill,
+                    errorBuilder: (s, error, a) {
+                      return const Center(
+                        child: Text(
+                          "Ocorreu um erro ao carregar a Imagem",
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    },
                   ),
                 ),
                 Container(
@@ -70,7 +80,7 @@ class SellCard extends StatelessWidget {
                       children: [
                         Text(
                           name,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -84,7 +94,7 @@ class SellCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

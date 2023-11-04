@@ -21,6 +21,8 @@ class ThemeDataManagerRepository extends ChangeNotifier {
 
   print(isDarkTheme);
 
+  
+
   _isDarkTheme = isDarkTheme;
 
     notifyListeners();
@@ -46,6 +48,8 @@ class ThemeDataManagerRepository extends ChangeNotifier {
         appBarTheme: AppBarTheme(
           backgroundColor: ColorsApp.primaryColorTheme
         ),
+
+        dividerColor: Colors.grey,
 
         bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Theme.of(context).scaffoldBackgroundColor),
         //textTheme: const TextTheme()

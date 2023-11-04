@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fredh_lda/Methods/auth_methods.dart';
@@ -5,6 +7,7 @@ import 'package:fredh_lda/Screens/Auth/signup_screen.dart';
 import 'package:fredh_lda/Screens/bottom_bar.dart';
 import 'package:fredh_lda/Widgets/custom_input.dart';
 import 'package:fredh_lda/Widgets/submit_button.dart';
+import 'package:fredh_lda/models/userModel.dart';
 import 'package:fredh_lda/utilis/colors.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -36,6 +39,20 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const BottomBar()),
+          (route) => false);
+    }
+  }
+
+    _signInWithGoogle({required BuildContext context}) async {
+ 
+    bool res = await _authMethods.authUserWithGoogle(context: context);
+
+
+    if (res == true) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const BottomBar(),
+          ),
           (route) => false);
     }
   }
@@ -161,29 +178,34 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          height: 40,
-                          width: double.infinity,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: ColorsApp.googleSignColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "assets/google.png",
-                                height: 20,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Entrar Com O Google",
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ],
+                        InkWell(
+                          onTap: () async {
+                           await _signInWithGoogle(context: context);
+                          },
+                          child: Container(
+                            height: 40,
+                            width: double.infinity,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: ColorsApp.googleSignColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/google.png",
+                                  height: 20,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Entrar Com O Google",
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],

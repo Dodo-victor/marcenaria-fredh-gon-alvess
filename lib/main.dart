@@ -6,43 +6,39 @@ import 'package:fredh_lda/Methods/auth_methods.dart';
 import 'package:fredh_lda/Screens/Auth/login_screen.dart';
 import 'package:fredh_lda/Screens/bottom_bar.dart';
 import 'package:fredh_lda/firebase_options.dart';
+import 'package:fredh_lda/repository/request_repository.dart';
 import 'package:fredh_lda/repository/theme_manager_repository.dart';
 import 'package:fredh_lda/repository/user_repository.dart';
 import 'package:fredh_lda/services/pref_service.dart';
 import 'package:fredh_lda/utilis/colors.dart';
 
-
 final userProvider = ChangeNotifierProvider((ref) => UserRepository());
-final themeDataManagerProvider = ChangeNotifierProvider((ref) => ThemeDataManagerRepository.instance);
+final requestProvider = ChangeNotifierProvider((ref) => RequestRepository());
+final themeDataManagerProvider =
+    ChangeNotifierProvider((ref) => ThemeDataManagerRepository.instance);
 
 void main() async {
-   
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.android);
-  runApp( const ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerStatefulWidget {
- const MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   ConsumerState<MyApp> createState() => _MyAppState();
 }
 
-
-
 class _MyAppState extends ConsumerState<MyApp> {
-
   final AuthMethods _authMethods = AuthMethods();
 
   _loadTheme() async {
-  await ref.read(themeDataManagerProvider).loadTheme();
-
+    await ref.read(themeDataManagerProvider).loadTheme();
   }
 
   @override
   void initState() {
-
     _loadTheme();
 
     super.initState();
@@ -50,13 +46,15 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context, ) {
-
+  Widget build(
+    BuildContext context,
+  ) {
     final themeDataManager = ref.watch(themeDataManagerProvider);
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: themeDataManager.themeData(context), /* ThemeData(
+      theme: themeDataManager.themeData(context),
+      /* ThemeData(
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -75,9 +73,14 @@ class _MyAppState extends ConsumerState<MyApp> {
         stream: _authMethods.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: SpinKitPumpingHeart(
-                color: ColorsApp.primaryColorTheme,
+            return Scaffold(
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SpinKitCircle(
+                    color: ColorsApp.primaryColorTheme,
+                  ),
+                ],
               ),
             );
           }

@@ -7,13 +7,14 @@ class ShowProductScreen extends StatelessWidget {
   final String price;
   final String detais;
   final String productDoc;
+  final String category;
   final String productCollection;
   final String woodType;
   final String size;
   final String productId;
   final bool isRequesting;
 
-   ShowProductScreen(
+  ShowProductScreen(
       {super.key,
       required this.photoUrl,
       required this.name,
@@ -22,9 +23,12 @@ class ShowProductScreen extends StatelessWidget {
       required this.productId,
       this.isRequesting = false,
       required this.woodType,
-      required this.size, required this.productDoc, required this.productCollection});
+      required this.size,
+      required this.productDoc,
+      required this.productCollection,
+      required this.category});
 
-      bool isLoading = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,10 @@ class ShowProductScreen extends StatelessWidget {
         productId: productId,
         isRequesting: isRequesting,
         size: size,
-        woodType: woodType, productDoc: productDoc, productCollection: productCollection,
+        woodType: woodType,
+        productDoc: productDoc,
+        productCollection: productCollection,
+        category: category,
       ),
     );
   }

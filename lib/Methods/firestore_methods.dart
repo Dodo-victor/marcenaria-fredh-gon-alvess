@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +28,7 @@ class FirestoreMethods {
         photoUrl:
             "https://www.decoracoesmoveis.com.br/media/catalog/product/cache/1/image/800x/9df78eab33525d08d6e5fb8d27136e95/p/_/p_g_28.jpg",
         id: uid,
-        hasRequest: false,
+        //  hasRequest: false,
         size: '5m x 2,10cm',
         woodType: 'MUSIVI');
 
@@ -70,6 +72,7 @@ class FirestoreMethods {
       {required String productId,
       required String productDoc,
       required String productCollection,
+      required String category,
       required BuildContext context}) async {
     final userData = await db.collection("usuários").doc(currentUid).get();
     UserModel user = UserModel.fromMap(userData);
@@ -107,7 +110,8 @@ class FirestoreMethods {
           product: merchandise,
           id: productId,
           userUid: currentUid,
-          isRequested: true);
+          isRequested: true,
+          category: category);
 
       await db
           .collection("solicitação")
@@ -118,7 +122,7 @@ class FirestoreMethods {
             requestProduct.toMap(),
           );
 
-      await db
+/*       await db
           .collection('marçenaria')
           .doc(productDoc)
           .collection(productCollection)
@@ -126,7 +130,7 @@ class FirestoreMethods {
           .update({
         "temSolicitação": true,
       });
-
+ */
       showDialog(
           context: context,
           builder: (context) {
@@ -165,7 +169,7 @@ class FirestoreMethods {
                           height: 10,
                         ),
                         const Text(
-                          "Sua Solicitação foi enviada com sucesso. por favor aguarde a nossa ligação",
+                          "Sua solicitação foi enviada com sucesso",
                           textAlign: TextAlign.center,
                         )
                       ],
@@ -214,7 +218,7 @@ class FirestoreMethods {
                           height: 10,
                         ),
                         const Text(
-                          "Já existe uma solicictação para este produto",
+                          "Este produto já se encontra na sua lista de solicitações",
                           textAlign: TextAlign.center,
                         )
                       ],
@@ -227,69 +231,20 @@ class FirestoreMethods {
     }
   }
 
-  getWindowsData() {
+  getMechandiseData(
+      {required String merchandiseDoc, required String merchandiseCollection}) {
     return db
         .collection('marçenaria')
-        .doc("janela")
-        .collection("janelas")
+        .doc(merchandiseDoc)
+        .collection(merchandiseCollection)
+        .orderBy(
+          "data",
+          descending: true,
+        )
         .snapshots();
   }
 
-  getTableData() {
-    return db
-        .collection('marçenaria')
-        .doc("mesa")
-        .collection("mesas")
-        .snapshots();
-  }
-
-  getRanksData() {
-    return db
-        .collection('marçenaria')
-        .doc("rank")
-        .collection("ranks")
-        .snapshots();
-  }
-
-  getChairData() {
-    return db
-        .collection('marçenaria')
-        .doc("cadeira")
-        .collection("cadeiras")
-        .snapshots();
-  }
-
-  getBedData() {
-    return db
-        .collection('marçenaria')
-        .doc("cama")
-        .collection("camas")
-        .snapshots();
-  }
-
-  getCabinetData() {
-    return db
-        .collection('marçenaria')
-        .doc("armario")
-        .collection("armarios")
-        .snapshots();
-  }
-
-  getPulpitData() {
-    return db
-        .collection('marçenaria')
-        .doc("pulpito")
-        .collection("pulpitos")
-        .snapshots();
-  }
-
-  getDoorData() {
-    return db
-        .collection('marçenaria')
-        .doc("porta")
-        .collection("portas")
-        .snapshots();
-    /* .map(
+  /* .map(
       (event)  {
         List<Merchandise> _merchandiseData = [];
 
@@ -326,7 +281,6 @@ class FirestoreMethods {
         return _merchandiseData;
       },
     ); */
-  }
 
   getUser({String? userUid}) async {
     final userData =
@@ -341,5 +295,23 @@ class FirestoreMethods {
     await db.collection('usuários').doc(currentUid).update({
       "nome": newName,
     });
+  }
+
+  changePhoneNumber({required String phoneNumber}) async {
+    await db.collection('usuários').doc(currentUid).update({
+      "telefone": phoneNumber,
+    });
+  }
+
+/* Future<({ int requestSize})> */ getRequestSize() async {
+    final requestData = await db
+        .collection("solicitação")
+        .doc(currentUid)
+        .collection("solicitação")
+        .get();
+
+    /*   return (requestSize: requestData.size ); */
+
+    return requestData.size;
   }
 }

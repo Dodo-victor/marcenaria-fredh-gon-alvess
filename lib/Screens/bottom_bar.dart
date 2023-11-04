@@ -6,8 +6,6 @@ import 'package:fredh_lda/utilis/pages.dart';
 
 import '../main.dart';
 
-
-
 class BottomBar extends ConsumerStatefulWidget {
   const BottomBar({super.key});
 
@@ -21,18 +19,20 @@ class _BottomBarState extends ConsumerState<BottomBar> {
     setState(() {
       _index = page;
     });
-
-
   }
 
-  
   _initGetUser() async {
     await ref.read(userProvider).getUser();
+  }
+
+  _initGetRequestSize() async {
+    await ref.read(requestProvider).getRequestSize();
   }
 
   @override
   void initState() {
     _initGetUser();
+    _initGetRequestSize();
     super.initState();
   }
 
@@ -48,8 +48,8 @@ class _BottomBarState extends ConsumerState<BottomBar> {
             icon: Icon(CupertinoIcons.home),
           ),
           BottomNavigationBarItem(
-            label: 'Definicões',
-            icon: Icon(CupertinoIcons.settings),
+            label: 'Perfil',
+            icon: Icon(Icons.person),
           ),
         ],
         currentIndex: _index,

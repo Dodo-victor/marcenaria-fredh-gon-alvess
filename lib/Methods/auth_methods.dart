@@ -1,9 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:fredh_lda/Methods/firestore_methods.dart';
 import 'package:fredh_lda/models/userModel.dart';
 import 'package:fredh_lda/services/pref_service.dart';
 import 'package:fredh_lda/utilis/show_snack_bar.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -13,11 +17,60 @@ class AuthMethods {
   String? currentUid;
 
   AuthMethods({this.currentUid}) {
-    currentUid =  "" ;
+    currentUid = "";
   }
 
   Stream<User?> authStateChanges() {
     return _auth.authStateChanges();
+  }
+
+  Future<bool> authUserWithGoogle({
+    required BuildContext context,
+  }) async {
+    bool res = false;
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleSignInAuth =
+          await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuth?.idToken,
+          accessToken: googleSignInAuth?.accessToken);
+
+      final authUser = await _auth.signInWithCredential(credential);
+
+      User? user = authUser.user;
+
+      if (user != null) {
+        if (authUser.additionalUserInfo!.isNewUser) {
+        final  UserModel userModel = UserModel(
+              name: user.displayName!,
+              email: user.email!,
+              phone: "",
+              uid: user.uid,
+              password: "",
+              type: "user");
+          await _db.collection("usuários").doc(user.uid).set(
+                userModel.toMap(),
+              );
+
+              print(user.uid);
+
+              
+
+          await _prefService.setUser(user: userModel);
+        }
+        res = true;
+      }
+    } on FirebaseAuthException catch (e) {
+      res = false;
+      showSnackBar(
+          content:
+              "Ocorreu um erro ao autenticar. Tente mais tarde! ${e.message}",
+          context: context);
+    }
+
+    return res;
   }
 
   signupUp({required UserModel userModel, required context}) async {
@@ -32,13 +85,13 @@ class AuthMethods {
       if (userCredential.user != null) {
         User? user = userCredential.user;
 
-       await _db.collection("usuários").doc(user!.uid).set(
+        await _db.collection("usuários").doc(user!.uid).set(
               userModel.toMap(),
             );
 
-       await _prefService.setUser(user: userModel);
+        await _prefService.setUser(user: userModel);
 
-        return res = 'success';
+        res = 'success';
       }
     } catch (e) {
       if (e is FirebaseAuthException) {
@@ -62,6 +115,8 @@ class AuthMethods {
         }
       }
     }
+
+    return res;
   }
 
   login(
@@ -72,10 +127,11 @@ class AuthMethods {
       String res = '';
 
       if (email.isNotEmpty || password.isNotEmpty) {
-       final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-            email: email, password: password);
+        final UserCredential userCredential = await _auth
+            .signInWithEmailAndPassword(email: email, password: password);
 
-        final UserModel userData =  await FirestoreMethods().getUser(userUid: userCredential.user!.uid );
+        final UserModel userData =
+            await FirestoreMethods().getUser(userUid: userCredential.user!.uid);
         await _prefService.setUser(user: userData);
         return res = "success";
       } else {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomInput extends StatelessWidget {
   final TextEditingController? controller;
   final String title;
+  final VoidCallback? onTap;
   final InputDecoration? decoration;
   final BorderRadius? borderRadius;
 
@@ -11,7 +12,7 @@ class CustomInput extends StatelessWidget {
       this.controller,
       required this.title,
       this.decoration,
-      this.borderRadius});
+      this.borderRadius, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class CustomInput extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextFormField(
+        onTap: onTap ,
         controller: controller,
         decoration: decoration ??
             InputDecoration(hintText: title, border: InputBorder.none),

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fredh_lda/Methods/auth_methods.dart';
@@ -27,21 +28,21 @@ class _SignupScreenState extends State<SignupScreen> {
   final AuthMethods _authMethods = AuthMethods();
 
   _signUp(context) async {
-
     if (_nameController.text.isNotEmpty ||
         _emailController.text.isNotEmpty ||
         _passwordController.text.isNotEmpty ||
         _phoneController.text.isNotEmpty) {
-              setState(() {
-      _isLoading = true;
-    });
-    UserModel userModel = UserModel(
-      name: _nameController.text,
-      email: _emailController.text,
-      phone: _phoneController.text,
-      password: _passwordController.text,
-      type: "user",
-    );
+      setState(() {
+        _isLoading = true;
+      });
+      UserModel userModel = UserModel(
+        name: _nameController.text,
+        email: _emailController.text,
+        phone: _phoneController.text,
+        password: _passwordController.text,
+        type: "user",
+        uid: FirebaseAuth.instance.currentUser!.uid,
+      );
       final res =
           await _authMethods.signupUp(userModel: userModel, context: context);
       setState(() {
@@ -65,15 +66,13 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: _isLoading
-          ? SpinKitDualRing(color: ColorsApp.primaryColorTheme)
-          : Stack(
+      body:  Stack(
               children: [
                 Container(
                   alignment: Alignment.center,
                   height: size.height * 0.4,
                   //decoration: const BoxDecoration(),
-                  child: Text(
+                  child: const Text(
                     'Criar Conta',
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
@@ -114,7 +113,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   title: "Email",
                                   controller: _emailController,
                                 ),
-                                   const SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 CustomInput(
@@ -132,6 +131,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   height: 30,
                                 ),
                                 SubmitButton(
+                                  isLoading: _isLoading,
                                   function: () async {
                                     await _signUp(context);
                                   },

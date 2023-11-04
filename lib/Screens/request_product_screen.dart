@@ -10,7 +10,8 @@ import 'package:timeago/timeago.dart' as timeago;
 class RequestProductScreen extends StatelessWidget {
   final String? productDoc;
   final String? productCollection;
-  const RequestProductScreen({super.key,  this.productDoc,  this.productCollection});
+  const RequestProductScreen(
+      {super.key, this.productDoc, this.productCollection});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,6 @@ class RequestProductScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final requestProductData = data.docs[index];
                 return ListTile(
-                  
                   autofocus: false,
                   onTap: () {
                     Navigator.of(context).push(
@@ -49,30 +49,34 @@ class RequestProductScreen extends StatelessWidget {
                           price: requestProductData["preço"],
                           detais: requestProductData["descrição"],
                           productId: requestProductData["id"],
-                          isRequesting: requestProductData["estaSolicitando"], productDoc: productDoc ?? "", productCollection: productCollection ?? "" ,
+                          isRequesting: requestProductData["estaSolicitando"],
+                          productDoc: productDoc ?? "",
+                          productCollection: productCollection ?? "",
+                          category: requestProductData["categoria"],
                         ),
                       ),
                     );
                   },
                   contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                   leading: Container(
-                    height: 100,
-                    width: 55,
+                    padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: ColorsApp.googleSignColor,
                       borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          requestProductData['foto'],
+                      color: ColorsApp.googleSignColor,
+                    ),
+                    child: Container(
+                      height: 55,
+                      width: 55,
+                      decoration: BoxDecoration(
+                        //color: ColorsApp.googleSignColor,
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(
+                            requestProductData['foto'],
+                          ),
                         ),
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 10,
-                            color: ColorsApp.primaryColorTheme,
-                            spreadRadius: 2,
-                            offset: Offset(0, 0.4)),
-                      ],
                     ),
                   ),
                   title: Text(requestProductData['produtoNome']),

@@ -33,7 +33,7 @@ class UserModel {
       email: map["email"] ?? "",
       phone: map["telefone"] ?? "",
       type: map['tipo'] ?? "",
-     // uid: map['uid'] ?? "",
+      uid: map['uid'] ?? "",
       password: map['senha'] ?? "",
     );
   }

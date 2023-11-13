@@ -41,7 +41,7 @@ class _SignupScreenState extends State<SignupScreen> {
         phone: _phoneController.text,
         password: _passwordController.text,
         type: "user",
-        uid: FirebaseAuth.instance.currentUser!.uid,
+        uid: "",
       );
       final res =
           await _authMethods.signupUp(userModel: userModel, context: context);

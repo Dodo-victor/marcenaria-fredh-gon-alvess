@@ -6,7 +6,7 @@ import 'package:fredh_lda/utilis/colors.dart';
 
 class ThemeDataManagerRepository extends ChangeNotifier {
   static final ThemeDataManagerRepository instance =
-  ThemeDataManagerRepository();
+      ThemeDataManagerRepository();
 
   bool _isDarkTheme = false;
 
@@ -30,40 +30,49 @@ class ThemeDataManagerRepository extends ChangeNotifier {
           brightness: Brightness.dark,
           useMaterial3: true,
           appBarTheme: const AppBarTheme(backgroundColor: Colors.black54),
-          scaffoldBackgroundColor:  Colors.black38,
-        navigationBarTheme: NavigationBarThemeData(
-            backgroundColor: Colors.black54,
-            surfaceTintColor: Colors.black38,
-            indicatorColor: ColorsApp.primaryColorTheme,
-            elevation: 30,
-            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected),
-        // primaryColorDark: ColorsApp.primaryColorTheme,
+          scaffoldBackgroundColor: Colors.black38,
+          navigationBarTheme: NavigationBarThemeData(
+              backgroundColor: Colors.black54,
+              surfaceTintColor: Colors.black38,
+              indicatorColor: ColorsApp.primaryColorTheme,
+              elevation: 30,
+              labelBehavior:
+                  NavigationDestinationLabelBehavior.onlyShowSelected),
+          // primaryColorDark: ColorsApp.primaryColorTheme,
 
-        //scaffoldBackgroundColor: Colors.grey.shade800,
+          //scaffoldBackgroundColor: Colors.grey.shade800,
           textTheme: TextTheme(
             titleMedium: const TextStyle(
               color: Colors.white,
               fontSize: 15,
               fontWeight: FontWeight.bold,
             ),
-            titleSmall:  TextStyle(
+            titleSmall: TextStyle(
               color: Colors.grey.shade400,
               fontSize: 15,
               fontWeight: FontWeight.w600,
             ),
           ),
-
-
-        bottomSheetTheme: BottomSheetThemeData(
-          backgroundColor: Colors.black
-        )
-      );
+          bottomSheetTheme:
+              BottomSheetThemeData(backgroundColor: Colors.black));
     } else {
       return ThemeData.light().copyWith(
         useMaterial3: true,
         scaffoldBackgroundColor: Colors.grey.shade200,
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+          titleSmall: TextStyle(
+            color: Colors.black45,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
 
-        primaryColorLight: Colors.grey.shade200,
+       // primaryColorLight: Colors.grey.shade200,
         navigationBarTheme: NavigationBarThemeData(
             backgroundColor: Colors.grey.shade200,
             surfaceTintColor: Colors.grey.shade200,
@@ -76,7 +85,7 @@ class ThemeDataManagerRepository extends ChangeNotifier {
           color: Colors.grey.shade200,
           surfaceTintColor: Colors.grey.shade300,
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 20,
           shadowColor: ColorsApp.googleSignColor,
         ),

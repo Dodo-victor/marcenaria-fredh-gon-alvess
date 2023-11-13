@@ -25,15 +25,15 @@ class ShowMerchandiseCard extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 20)
+
               ),
             ),
             InkWell(
               onTap: viewAll,
-              child: const Row(
+              child:  Row(
                 children: [
-                  Text("Ver Tudo"),
+                  Text("Ver Tudo", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.black45, fontSize: 13) ),
                   SizedBox(
                     width: 5,
                   ),

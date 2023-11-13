@@ -85,8 +85,17 @@ class AuthMethods {
       if (userCredential.user != null) {
         User? user = userCredential.user;
 
+        UserModel userData = UserModel(
+          name: userModel.name,
+          email: userModel.email,
+          phone: userModel.phone,
+          password: userModel.password,
+          type: "user",
+          uid: user!.uid,
+        );
+
         await _db.collection("usuários").doc(user!.uid).set(
-              userModel.toMap(),
+          userData.toMap(),
             );
 
         await _prefService.setUser(user: userModel);

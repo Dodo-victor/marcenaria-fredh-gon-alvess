@@ -15,6 +15,7 @@ class BottomBar extends ConsumerStatefulWidget {
 
 class _BottomBarState extends ConsumerState<BottomBar> {
   int _index = 0;
+
   _navigateToPage(int page) {
     setState(() {
       _index = page;
@@ -40,20 +41,57 @@ class _BottomBarState extends ConsumerState<BottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: items[_index],
-      bottomNavigationBar: BottomNavigationBar(
-        fixedColor: ColorsApp.primaryColorTheme,
-        items: const [
-          BottomNavigationBarItem(
-            label: 'Início',
-            icon: Icon(CupertinoIcons.home),
+      bottomNavigationBar: NavigationBar(
+        // fixedColor: ColorsApp.primaryColorTheme,
+        destinations: [
+          InkWell(
+            onTap: () => _navigateToPage(0),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              decoration: BoxDecoration(
+                  border: _index == 0
+                      ? const Border(top: BorderSide(width: 2))
+                      : null),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(CupertinoIcons.home),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    "Início",
+                    style: Theme.of(context).textTheme.titleSmall,
+                  )
+                ],
+              ),
+            ),
           ),
-          BottomNavigationBarItem(
-            label: 'Perfil',
-            icon: Icon(Icons.person),
+          InkWell(
+            onTap: () => _navigateToPage(1),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              decoration: BoxDecoration(
+                  border: _index == 1
+                      ? const Border(top: BorderSide(width: 2))
+                      : null),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(CupertinoIcons.person),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    "Perfil",
+                    style: Theme.of(context).textTheme.titleSmall,
+                  )
+                ],
+              ),
+            ),
           ),
         ],
-        currentIndex: _index,
-        onTap: _navigateToPage,
+        selectedIndex: _index,
       ),
     );
   }

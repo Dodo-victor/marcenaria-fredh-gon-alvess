@@ -6,6 +6,7 @@ import 'package:fredh_lda/Methods/auth_methods.dart';
 import 'package:fredh_lda/Screens/Auth/signup_screen.dart';
 import 'package:fredh_lda/Screens/bottom_bar.dart';
 import 'package:fredh_lda/Widgets/custom_input.dart';
+import 'package:fredh_lda/Widgets/loader.dart';
 import 'package:fredh_lda/Widgets/submit_button.dart';
 import 'package:fredh_lda/models/userModel.dart';
 import 'package:fredh_lda/utilis/colors.dart';
@@ -18,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 bool _isLoading = false;
+bool _isLoggingWithGoogle = false;
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
@@ -43,17 +45,24 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-    _signInWithGoogle({required BuildContext context}) async {
- 
+  _signInWithGoogle({required BuildContext context}) async {
+    setState(() {
+      _isLoggingWithGoogle = true;
+    });
     bool res = await _authMethods.authUserWithGoogle(context: context);
+    setState(() {
+      _isLoggingWithGoogle = false;
+    });
 
+    await Future.delayed(Duration(seconds: 2));
 
     if (res == true) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => const BottomBar(),
-          ),
-          (route) => false);
+        MaterialPageRoute(
+          builder: (context) => const BottomBar(),
+        ),
+        (route) => false,
+      );
     }
   }
 
@@ -69,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
             width: double.infinity,
             alignment: Alignment.center,
             child: const Text(
-              "Fredh LDA",
+              "Marcenária ACG",
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
           ),
@@ -84,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   color: ColorsApp.primaryColorTheme.withOpacity(0.5),
-                  
+
                 ),
               ) */
 
@@ -112,14 +121,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(
                           height: 20,
                         ),
-                         CustomInput(
+                        CustomInput(
                           title: "Email",
                           controller: _emailController,
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                         CustomInput(
+                        CustomInput(
                           title: "Senha",
                           controller: _passwordController,
                         ),
@@ -129,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         SubmitButton(
                           title: "Entrar",
                           isLoading: _isLoading,
-                          function: (){
+                          function: () {
                             _login(context);
                           },
                         ),
@@ -180,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         InkWell(
                           onTap: () async {
-                           await _signInWithGoogle(context: context);
+                            await _signInWithGoogle(context: context);
                           },
                           child: Container(
                             height: 40,
@@ -190,22 +199,26 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: ColorsApp.googleSignColor,
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "assets/google.png",
-                                  height: 20,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "Entrar Com O Google",
-                                  style: Theme.of(context).textTheme.titleMedium,
-                                ),
-                              ],
-                            ),
+                            child: _isLoggingWithGoogle
+                                ? Loader()
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        "assets/google.png",
+                                        height: 20,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Entrar Com O Google",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
+                                      ),
+                                    ],
+                                  ),
                           ),
                         ),
                       ],

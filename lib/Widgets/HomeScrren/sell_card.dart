@@ -28,12 +28,7 @@ class SellCard extends StatelessWidget {
       child: InkWell(
         onTap: function,
         child: Card(
-          color: Colors.grey.shade200,
-          surfaceTintColor: Colors.grey.shade300,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          elevation: 20,
-          shadowColor: ColorsApp.googleSignColor,
+
           child: Column(
             children: [
               /*     const SizedBox(

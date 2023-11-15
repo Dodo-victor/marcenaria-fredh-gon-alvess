@@ -20,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final FirestoreMethods _firestoreMethods = FirestoreMethods();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,8 +99,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return Center(
-                                child: SpinKitSpinningCircle(
-                                    color: ColorsApp.primaryColorTheme),
+                                child: Container(
+                                  height: 296,
+                                  child: SpinKitCircle(
+                                      color: ColorsApp.primaryColorTheme),
+                                ),
                               );
                             }
 
@@ -110,9 +114,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               return SizedBox(
                                 height: 296,
                                 child: snapshot.data!.docs.length == 0
-                                    ? const Center(
+                                    ? Center(
                                         child: Text(
-                                            "Sem artigos a venda de momento"),
+                                          "Sem artigos a venda de momento",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall?.copyWith(fontSize: 20),
+                                        ),
                                       )
                                     : ListView.builder(
                                         // padding: const EdgeInsets.all(8),

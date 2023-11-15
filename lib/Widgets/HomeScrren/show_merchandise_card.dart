@@ -25,7 +25,7 @@ class ShowMerchandiseCard extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 20)
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 20, fontWeight: FontWeight.bold)
 
               ),
             ),
@@ -33,7 +33,7 @@ class ShowMerchandiseCard extends StatelessWidget {
               onTap: viewAll,
               child:  Row(
                 children: [
-                  Text("Ver Tudo", style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.black45, fontSize: 13) ),
+                  Text("Ver Tudo", style: Theme.of(context).textTheme.titleMedium?.copyWith( fontSize: 14) ),
                   SizedBox(
                     width: 5,
                   ),

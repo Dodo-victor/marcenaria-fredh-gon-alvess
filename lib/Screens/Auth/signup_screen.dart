@@ -41,7 +41,7 @@ class _SignupScreenState extends State<SignupScreen> {
         phone: _phoneController.text,
         password: _passwordController.text,
         type: "user",
-        uid: "",
+        uid: "", photoUrl: null,
       );
       final res =
           await _authMethods.signupUp(userModel: userModel, context: context);

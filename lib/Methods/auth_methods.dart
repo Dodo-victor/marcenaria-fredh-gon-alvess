@@ -43,20 +43,18 @@ class AuthMethods {
 
       if (user != null) {
         if (authUser.additionalUserInfo!.isNewUser) {
-        final  UserModel userModel = UserModel(
+          final UserModel userModel = UserModel(
               name: user.displayName!,
               email: user.email!,
               phone: "",
               uid: user.uid,
               password: "",
-              type: "user");
+              type: "user", photoUrl: user.photoURL);
           await _db.collection("usuários").doc(user.uid).set(
                 userModel.toMap(),
               );
 
-              print(user.uid);
-
-              
+          print(user.uid);
 
           await _prefService.setUser(user: userModel);
         }
@@ -92,10 +90,11 @@ class AuthMethods {
           password: userModel.password,
           type: "user",
           uid: user!.uid,
+          photoUrl: user.photoURL,
         );
 
         await _db.collection("usuários").doc(user!.uid).set(
-          userData.toMap(),
+              userData.toMap(),
             );
 
         await _prefService.setUser(user: userModel);

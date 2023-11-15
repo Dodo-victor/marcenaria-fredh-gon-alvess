@@ -467,7 +467,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           phone: "",
                                                           password: "",
                                                           type: "",
-                                                          uid: '',
+                                                          uid: '', photoUrl: '',
                                                         );
                                                         await PrefService()
                                                             .setUser(

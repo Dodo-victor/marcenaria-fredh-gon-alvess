@@ -4,13 +4,15 @@ class UserModel {
   final String phone;
   final String password;
   final String? uid;
+  final String? photoUrl;
 
   final String? type;
 
   UserModel({
     required this.name,
     required this.email,
-     this.uid,
+    required this.photoUrl,
+    this.uid,
     required this.phone,
     required this.password,
     required this.type,
@@ -22,6 +24,7 @@ class UserModel {
       'email': email,
       'telefone': phone,
       'senha': password,
+      'foto': photoUrl,
       'uid': uid,
       'tipo': type,
     };
@@ -34,7 +37,7 @@ class UserModel {
       phone: map["telefone"] ?? "",
       type: map['tipo'] ?? "",
       uid: map['uid'] ?? "",
-      password: map['senha'] ?? "",
+      password: map['senha'] ?? "", photoUrl: map['foto'] ,
     );
   }
 }

@@ -31,13 +31,10 @@ class ViewAllScreen extends StatelessWidget {
             if (snapshot.hasData) {
               final lenght = snapshot.data.docs.length;
               return lenght == 0
-                  ? const Center(
+                  ?  Center(
                       child: Text(
                         "Sem artigos a venda de momento",
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black45,
-                            fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.titleSmall,
                         textAlign: TextAlign.center,
                       ),
                     )

@@ -27,21 +27,46 @@ class ThemeDataManagerRepository extends ChangeNotifier {
   themeData(context) {
     if (_isDarkTheme) {
       return ThemeData.dark().copyWith(
-          brightness: Brightness.dark,
-          useMaterial3: true,
-          appBarTheme: const AppBarTheme(backgroundColor: Colors.black54),
-          scaffoldBackgroundColor: Colors.black38,
-          navigationBarTheme: NavigationBarThemeData(
-              backgroundColor: Colors.black54,
-              surfaceTintColor: Colors.black38,
-              indicatorColor: ColorsApp.primaryColorTheme,
-              elevation: 30,
-              labelBehavior:
-                  NavigationDestinationLabelBehavior.onlyShowSelected),
-          // primaryColorDark: ColorsApp.primaryColorTheme,
+        bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.black),
 
-          //scaffoldBackgroundColor: Colors.grey.shade800,
-          textTheme: TextTheme(
+        // brightness: Brightness.dark,
+        useMaterial3: true,
+        appBarTheme: AppBarTheme(
+            backgroundColor: ColorsApp.darkBackgroundColor,
+            surfaceTintColor: ColorsApp.darkSurfaceColor),
+        // scaffoldBackgroundColor: Colors.black38,
+        navigationBarTheme: NavigationBarThemeData(
+            backgroundColor: ColorsApp.darkBackgroundColor,
+            surfaceTintColor: ColorsApp.darkSurfaceColor,
+            indicatorColor: ColorsApp.primaryColorTheme,
+            elevation: 30,
+            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected),
+
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: ColorsApp.darkBackgroundColor,
+        cardColor: ColorsApp.darkSurfaceColor,
+        primaryColor: ColorsApp.darkAccentColor,
+        hintColor: ColorsApp.darkAccentColor,
+        textTheme: TextTheme(
+          titleMedium: TextStyle(
+            color: ColorsApp.darkTextColor,
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+          titleLarge: TextStyle(color: ColorsApp.darkTextColor),
+          titleSmall: TextStyle(
+            color: ColorsApp.darkSecondaryTextColor,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        iconTheme: IconThemeData(color: Colors.grey.shade200),
+      );
+
+      // primaryColorDark: ColorsApp.primaryColorTheme,
+
+      //scaffoldBackgroundColor: Colors.grey.shade800,
+      /*  textTheme: TextTheme(
             titleMedium: const TextStyle(
               color: Colors.white,
               fontSize: 15,
@@ -52,14 +77,30 @@ class ThemeDataManagerRepository extends ChangeNotifier {
               fontSize: 15,
               fontWeight: FontWeight.w600,
             ),
-          ),
-          bottomSheetTheme:
-              BottomSheetThemeData(backgroundColor: Colors.black));
+          ),*/
     } else {
       return ThemeData.light().copyWith(
         useMaterial3: true,
-        scaffoldBackgroundColor: Colors.grey.shade200,
-        textTheme: const TextTheme(
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: ColorsApp.lightBackgroundColor,
+        cardColor: ColorsApp.lightSurfaceColor,
+        primaryColor: ColorsApp.lightAccentColor,
+        hintColor: ColorsApp.lightAccentColor,
+        textTheme: TextTheme(
+          titleMedium: TextStyle(
+              color: ColorsApp.lightTextColor,
+              fontSize: 15,
+              fontWeight: FontWeight.bold),
+          titleSmall: TextStyle(
+              color: ColorsApp.lightSecondaryTextColor,
+              fontSize: 15,
+              fontWeight: FontWeight.bold),
+          titleLarge: TextStyle(color: ColorsApp.lightTextColor),
+        ),
+        iconTheme: IconThemeData(color: Colors.black),
+
+        // scaffoldBackgroundColor: Colors.grey.shade200,
+        /*  textTheme: const TextTheme(
           titleMedium: TextStyle(
             color: Colors.black,
             fontSize: 15,
@@ -70,9 +111,9 @@ class ThemeDataManagerRepository extends ChangeNotifier {
             fontSize: 15,
             fontWeight: FontWeight.w600,
           ),
-        ),
+        ),*/
 
-       // primaryColorLight: Colors.grey.shade200,
+        // primaryColorLight: Colors.grey.shade200,
         navigationBarTheme: NavigationBarThemeData(
             backgroundColor: Colors.grey.shade200,
             surfaceTintColor: Colors.grey.shade200,
@@ -89,7 +130,6 @@ class ThemeDataManagerRepository extends ChangeNotifier {
           elevation: 20,
           shadowColor: ColorsApp.googleSignColor,
         ),
-        brightness: Brightness.light,
 
         appBarTheme: AppBarTheme(backgroundColor: ColorsApp.primaryColorTheme),
 

@@ -72,9 +72,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   alignment: Alignment.center,
                   height: size.height * 0.4,
                   //decoration: const BoxDecoration(),
-                  child: const Text(
+                  child:  Text(
                     'Criar Conta',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 28),
                   ),
                 ),
                 Expanded(

@@ -12,39 +12,32 @@ class UserRepository extends ChangeNotifier {
   UserModel? _user;
   UserModel? _localUser;
 
-   get user   {
-
-    if(_user != null)  {
-
-    return _user!;
-
-
+  get user {
+    if (_user != null) {
+      return _user!;
     } else {
-      if(_localUser != null){
-        return  _localUser!;
+      if (_localUser != null) {
+        return _localUser!;
       }
-
-
     }
+  }
 
-
+  updateData({required Map<Object, Object> data}) async {
+    await FirestoreMethods().updateData(data: data);
+    await getUser();
 
 
   }
 
-
   getUser() async {
     final userData = await _db.getUser();
     _user = userData;
-    final  userLocal = await  _prefService.getUser();
+    final userLocal = await _prefService.getUser();
 
-
-
-    if(userLocal != null){
-      final  user =  jsonDecode(userLocal);
+    if (userLocal != null) {
+      final user = await jsonDecode(userLocal);
       UserModel userModel = UserModel.fromMap(user);
       _localUser = userModel;
-
     }
 
     notifyListeners();

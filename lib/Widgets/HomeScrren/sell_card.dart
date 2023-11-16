@@ -48,9 +48,12 @@ class SellCard extends StatelessWidget {
                   fit: BoxFit.cover,
                   errorBuilder: (s, error, a) {
                     return const Center(
-                      child: Text(
-                        "Ocorreu um erro ao carregar a Imagem",
-                        textAlign: TextAlign.center,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Ocorreu um erro ao carregar a Imagem",
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     );
                   },
@@ -71,9 +74,7 @@ class SellCard extends StatelessWidget {
                     children: [
                       Text(
                         name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 17                                                                                                                  )
                       ),
                       const SizedBox(
                         height: 5,

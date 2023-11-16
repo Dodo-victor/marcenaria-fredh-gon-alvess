@@ -137,7 +137,7 @@ class FirestoreMethods {
             return Dialog(
               child: SizedBox(
                 height: 250,
-                child: FittedBox(
+                child: Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
@@ -158,18 +158,16 @@ class FirestoreMethods {
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text(
+                         Text(
                           "Solicitação enviada",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                             style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 20)
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text(
+                         Text(
                           "Sua solicitação foi enviada com sucesso",
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(),
                           textAlign: TextAlign.center,
                         )
                       ],
@@ -186,11 +184,12 @@ class FirestoreMethods {
             return Dialog(
               child: SizedBox(
                 height: 250,
-                child: FittedBox(
+                child: Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
+                      const  SizedBox(height: 20,),
                         Container(
                           height: 70,
                           width: 70,
@@ -207,18 +206,16 @@ class FirestoreMethods {
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text(
+                         Text(
                           "Ups",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                           style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 20)
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text(
+                         Text(
                           "Este produto já se encontra na sua lista de solicitações",
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(),
                           textAlign: TextAlign.center,
                         )
                       ],
@@ -291,10 +288,8 @@ class FirestoreMethods {
     return user;
   }
 
-  changeName({required String newName}) async {
-    await db.collection('usuários').doc(currentUid).update({
-      "nome": newName,
-    });
+  updateData({required Map<Object, Object> data}) async {
+    await db.collection('usuários').doc(currentUid).update(data);
   }
 
   changePhoneNumber({required String phoneNumber}) async {
@@ -303,7 +298,8 @@ class FirestoreMethods {
     });
   }
 
-/* Future<({ int requestSize})> */ getRequestSize() async {
+/* Future<({ int requestSize})> */
+  getRequestSize() async {
     final requestData = await db
         .collection("solicitação")
         .doc(currentUid)

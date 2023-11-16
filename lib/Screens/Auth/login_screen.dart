@@ -77,9 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
             height: _size.height * 0.5,
             width: double.infinity,
             alignment: Alignment.center,
-            child: const Text(
+            child:  Text(
               "Marcenária ACG",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 28),
             ),
           ),
           Column(

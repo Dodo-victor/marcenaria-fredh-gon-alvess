@@ -31,7 +31,7 @@ class PrefService {
 
   }
 
-  saveTheme(value) async {
+  saveTheme({ bool value = false}) async {
     final prefService = await SharedPreferences.getInstance();
 
    await prefService.setBool("theme", value);

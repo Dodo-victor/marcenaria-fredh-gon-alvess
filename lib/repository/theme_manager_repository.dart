@@ -27,7 +27,7 @@ class ThemeDataManagerRepository extends ChangeNotifier {
   themeData(context) {
     if (_isDarkTheme) {
       return ThemeData.dark().copyWith(
-        bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.black),
+        bottomSheetTheme: const BottomSheetThemeData(backgroundColor: Colors.black),
 
         // brightness: Brightness.dark,
         useMaterial3: true,
@@ -59,6 +59,7 @@ class ThemeDataManagerRepository extends ChangeNotifier {
             fontSize: 15,
             fontWeight: FontWeight.w600,
           ),
+            bodyMedium: const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: Colors.white)
         ),
         iconTheme: IconThemeData(color: Colors.grey.shade200),
       );
@@ -83,21 +84,33 @@ class ThemeDataManagerRepository extends ChangeNotifier {
         useMaterial3: true,
         brightness: Brightness.light,
         scaffoldBackgroundColor: ColorsApp.lightBackgroundColor,
+        //dialogBackgroundColor:  ,
+        dialogTheme:  DialogTheme(
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.grey.shade100,
+
+        ),
         cardColor: ColorsApp.lightSurfaceColor,
+        //primaryTextTheme: TextTheme(),
+
+
         primaryColor: ColorsApp.lightAccentColor,
         hintColor: ColorsApp.lightAccentColor,
         textTheme: TextTheme(
           titleMedium: TextStyle(
               color: ColorsApp.lightTextColor,
               fontSize: 15,
-              fontWeight: FontWeight.bold),
+              fontWeight: FontWeight.bold, ),
           titleSmall: TextStyle(
               color: ColorsApp.lightSecondaryTextColor,
               fontSize: 15,
               fontWeight: FontWeight.bold),
           titleLarge: TextStyle(color: ColorsApp.lightTextColor),
+
+          bodyMedium: const TextStyle(fontSize: 17, fontWeight: FontWeight.normal, color: Colors.black)
+
         ),
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
 
         // scaffoldBackgroundColor: Colors.grey.shade200,
         /*  textTheme: const TextTheme(
@@ -142,7 +155,7 @@ class ThemeDataManagerRepository extends ChangeNotifier {
 
   changeTheme() async {
     _isDarkTheme = !_isDarkTheme;
-    await _prefService.saveTheme(_isDarkTheme);
+    await _prefService.saveTheme(value: _isDarkTheme);
     notifyListeners();
   }
 }

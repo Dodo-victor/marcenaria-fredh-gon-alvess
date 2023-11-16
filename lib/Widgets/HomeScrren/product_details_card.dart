@@ -74,9 +74,9 @@ class _ProductDetailsCardState extends State<ProductDetailsCard> {
         return Column(
           children: [
             AspectRatio(
-              aspectRatio: 5 / 5,
+              aspectRatio: 7 / 7,
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 5),
+                margin: const EdgeInsets.symmetric(horizontal: 5),
                 height: size.height * 0.3,
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -84,7 +84,7 @@ class _ProductDetailsCardState extends State<ProductDetailsCard> {
                 ),
                 child: Image(
                   image: NetworkImage(widget.photoUrl, scale: 2),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitWidth,
                   errorBuilder: (s, error, a) {
                     return const Center(
                       child: Text(

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fredh_lda">
    <application
-        android:label="fredh_lda"
+        android:label="Marcenária ACG"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
